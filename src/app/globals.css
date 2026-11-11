@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Sage green on warm white and cream, charcoal-green text, soft gray borders.
+   Money in = green, money out = muted terracotta. Light is the default theme. */
+:root {
+  --radius: 0.875rem;
+
+  --background: #f7f8f3; /* warm white */
+  --foreground: #26352d; /* charcoal green */
+  --card: #ffffff;
+  --card-foreground: #26352d;
+  --popover: #ffffff;
+  --popover-foreground: #26352d;
+  --primary: #52745d; /* sage dark */
+  --primary-foreground: #ffffff;
+  --secondary: #e8efe8;
+  --secondary-foreground: #2f4437;
+  --muted: #eff1ea;
+  --muted-foreground: #6b786f; /* #87938a darkened slightly for readable body text */
+  --accent: #e8efe8;
+  --accent-foreground: #3d5c47;
+  --border: #e3e7dd;
+  --input: #d6ddd3;
+  --ring: #789b83;
+  --brand-accent: #789b83; /* sage */
+  --cream: #f3efe3;
+
+  --success: #2f7a4f;
+  --success-soft: #e3f1e7;
+  --warning: #996512;
+  --warning-soft: #f8eed9;
+  --danger: #b04a36;
+  --danger-soft: #f8e6e1;
+  --info: #3e6a7d;
+  --info-soft: #e4eef1;
+
+  --hero: #4a6a55;
+  --hero-foreground: #f7f8f3;
+  --hero-muted: #cfdcd1;
+}
+
+.dark {
+  --background: #131915;
+  --foreground: #e5ebe4;
+  --card: #1a221d;
+  --card-foreground: #e5ebe4;
+  --popover: #1e2721;
+  --popover-foreground: #e5ebe4;
+  --primary: #9dbba6;
+  --primary-foreground: #14201a;
+  --secondary: #232d27;
+  --secondary-foreground: #d5e0d6;
+  --muted: #212a24;
+  --muted-foreground: #9aa69d;
+  --accent: #253229;
+  --accent-foreground: #bcd3c1;
+  --border: #2a352e;
+  --input: #354139;
+  --ring: #8fb09a;
+  --brand-accent: #8fb09a;
+  --cream: #24291f;
+
+  --success: #7cc59a;
+  --success-soft: #1a2e22;
+  --warning: #e2b060;
+  --warning-soft: #33291a;
+  --danger: #e58d79;
+  --danger-soft: #35201b;
+  --info: #8cb9cc;
+  --info-soft: #1b2a30;
+
+  --hero: #2b3d31;
+  --hero-foreground: #eef3ed;
+  --hero-muted: #a9bcad;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand-accent);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-cream: var(--cream);
+  --color-hero: var(--hero);
+  --color-hero-foreground: var(--hero-foreground);
+  --color-hero-muted: var(--hero-muted);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: calc(var(--radius) - 2px);
+  --radius-xl: var(--radius);
+  --radius-2xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv11", "ss01";
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Money and durations line up in columns. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}

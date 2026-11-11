@@ -57,19 +57,23 @@ The data exists **only on that phone**. Clearing the browser's site data, deleti
   - The dashboard reminds you when there is no backup from the last 7 days.
 - **Restore:** Settings → Backup & restore → **Restore from backup…**, then pick the file.
   - The file is checked first: format, schema version, required fields, whole-paise amounts, and unique, linked IDs.
-  - A summary of what's in it is shown before anything changes.
-  - Restoring replaces the data on the phone. The previous data is kept, and **Undo last restore** brings it back.
-  - Restoring the same backup a second time is refused unless you tick the confirmation.
+  - A summary of what's in it is shown before anything changes. Then choose:
+  - **Merge** (default when the phone has data): adds only the records this phone doesn't have, keeping every ID and link.
+    - Records already on the phone are never changed. A record with the same ID but different content is a conflict: the phone's version is kept and listed in the preview.
+    - Nothing is added twice. A salary month already credited, a repayment saved twice, or merging the same file again adds nothing.
+    - Debt balances are recalculated from the repayments.
+  - **Full restore:** replaces everything after you tick an explicit confirmation. A `before-restore-…json` copy of the current data is downloaded first, and the in-app undo copy is kept too.
+  - **Undo last restore** brings back the data from just before the last merge or full restore.
+  - Every page and balance updates as soon as the import finishes (balances are always calculated from the stored transactions).
+- **Where the file goes:** Android saves to **Downloads**. On iPhone, Safari saves to **Files → Downloads**. If the phone supports it, **Save to Files / Drive…** opens the share sheet so you can choose where to save it. Nothing is uploaded by the app.
 - **Delete all data:** Settings → About your data. You must type `DELETE` to confirm.
 
 ## Moving data from the old server version
 
-The previous version stored data in MongoDB. `npm run export:mongo` reads that database (it is only read, never changed) and writes two files to `./backups/` (git-ignored):
+An earlier version stored data in MongoDB. That code has been removed completely: the app needs no database, server, environment variables or secrets. The old data was exported once to `./backups/` (git-ignored, never deployed):
 
-- `mongodb-full-dump-….json`: a raw copy of every collection, kept as a safety copy.
-- `my-pay-backup-from-server-….json`: a MY PAY backup file. Restore it on the phone with **Restore from backup**.
-
-Set `MONGODB_URI` (and `MONGODB_DB`) in `.env.local`, or pass them on the command line, to export from Atlas.
+- `my-pay-backup-from-server-….json`: a MY PAY backup file. Restore it on the phone with **Restore from backup**. Older backups upgrade automatically.
+- `mongodb-full-dump-….json`: a raw safety copy of the old database.
 
 ## How the money works
 
@@ -110,7 +114,6 @@ src/
   lib/                  calculations, months, money, dates, validation, types
 scripts/
   postbuild.mjs         copies the service worker to out/sw.js
-  export-mongo-backup.mjs  one-time export from the old MongoDB version
 public/icons/           app icons (192, 512, maskable, Apple touch)
 tests/                  Vitest suites
 ```
