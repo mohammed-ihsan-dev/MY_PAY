@@ -24,11 +24,15 @@ Starting PIN: **1627**. Change it in Settings → PIN lock.
 
 ## Deploy (HTTPS is required for install and offline mode)
 
-The `out/` folder is a plain static site. On **Vercel**:
+The `out/` folder is a plain static site. On **Vercel**, import the repository. `vercel.json` already sets everything:
 
-1. Import the repository.
-2. Leave the build command as `npm run build` and set the output directory to `out`.
-3. `vercel.json` adds clean URLs, security headers (CSP and others) and the service-worker headers.
+- **Framework:** Next.js.
+- **Install command:** `npm ci --include=dev`. The service-worker build needs `esbuild`, `serwist` and `@serwist/turbopack`, which are dev dependencies.
+- **Build command:** `npm run build`. This runs `next build`, then `scripts/postbuild.mjs`, which checks the service worker and copies it to `/sw.js`.
+- **Output directory:** leave it at the default. The Next.js preset picks up the static export in `out/` by itself.
+- **Node.js:** 22.x (from `engines` in `package.json` and `.nvmrc`).
+- **Also in `vercel.json`:** clean URLs, security headers (CSP and others) and the service-worker headers.
+- **Environment variables:** none.
 
 Any static host with HTTPS works the same way (Netlify, Cloudflare Pages, GitHub Pages with clean URLs).
 

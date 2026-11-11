@@ -35,6 +35,7 @@
     "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "fake-indexeddb": "^6.2.8",
@@ -45,6 +46,6 @@
     "vitest": "^5.1.0"
   },
   "engines": {
-    "node": ">=20.9"
+    "node": "22.x"
   }
 }
